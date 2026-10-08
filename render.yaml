@@ -1,0 +1,17 @@
+# Render Blueprint for the API. In Render: New > Blueprint > pick this repo.
+services:
+  - type: web
+    name: airbnb-clone-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: CORS_ORIGINS
+        value: https://YOUR-FRONTEND.vercel.app   # set after the frontend is deployed
+      - key: PUBLIC_API_URL
+        value: https://airbnb-clone-api.onrender.com  # this service's own URL

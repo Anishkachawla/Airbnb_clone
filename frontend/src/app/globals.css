@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: 34 34 34;        /* #222222 primary text */
+  --muted: 113 113 113;   /* #717171 secondary text */
+  --line: 221 221 221;    /* #DDDDDD borders */
+  --surface: 255 255 255;
+  --soft: 247 247 247;    /* #F7F7F7 panels */
+  --hover: 235 235 235;
+  color-scheme: light;
+}
+
+.dark {
+  --ink: 236 236 236;
+  --muted: 160 160 160;
+  --line: 62 62 62;
+  --surface: 22 22 22;
+  --soft: 34 34 34;
+  --hover: 48 48 48;
+  color-scheme: dark;
+}
+
+html, body {
+  background: rgb(var(--surface));
+  color: rgb(var(--ink));
+  /* Airbnb's own font stack falls back to these system faces */
+  font-family: "Airbnb Cereal VF", Circular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* The header changes height on scroll; stop the browser re-anchoring and bouncing the page */
+  overflow-anchor: none;
+}
+
+@layer components {
+  .btn-brand {
+    @apply rounded-lg px-6 py-3.5 text-base font-semibold text-white transition active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100;
+    background: linear-gradient(to right, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
+  }
+  .btn-dark {
+    @apply rounded-lg bg-ink px-6 py-3 text-base font-semibold text-surface transition hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-30;
+  }
+  .btn-outline {
+    @apply rounded-lg border border-ink px-5 py-3 font-semibold transition hover:bg-soft active:scale-[0.98];
+  }
+  .link-underline {
+    @apply font-semibold underline underline-offset-2 hover:text-ink/80;
+  }
+  .field {
+    @apply w-full rounded-lg border border-line bg-surface px-3 py-3 text-base outline-none transition focus:border-ink focus:ring-1 focus:ring-ink;
+  }
+  .skeleton {
+    @apply animate-shimmer bg-soft;
+    background-image: linear-gradient(90deg, rgb(var(--soft)) 0, rgb(var(--hover)) 40px, rgb(var(--soft)) 80px);
+    background-size: 800px 100%;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+:focus-visible { outline: 2px solid rgb(var(--ink)); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Leaflet price pins */
+.price-pin {
+  background: rgb(var(--surface));
+  color: rgb(var(--ink));
+  border-radius: 9999px;
+  padding: 4px 9px;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.25);
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  transition: transform 120ms;
+}
+.price-pin:hover { transform: translate(-50%, -50%) scale(1.08); }
+.price-pin.active { background: #222; color: #fff; }
+.leaflet-div-icon.pin-wrap { background: transparent; border: none; }
+.leaflet-container { font: inherit; background: rgb(var(--soft)); }
+
+/* Dual-thumb price slider: only the thumbs receive pointer events */
+.range-thumb::-webkit-slider-thumb {
+  pointer-events: auto; -webkit-appearance: none; appearance: none;
+  width: 30px; height: 30px; border-radius: 9999px; background: rgb(var(--surface));
+  border: 1px solid rgb(var(--line)); box-shadow: 0 2px 6px rgba(0,0,0,0.18); cursor: grab;
+}
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto; width: 30px; height: 30px; border-radius: 9999px; background: rgb(var(--surface));
+  border: 1px solid rgb(var(--line)); box-shadow: 0 2px 6px rgba(0,0,0,0.18); cursor: grab;
+}
