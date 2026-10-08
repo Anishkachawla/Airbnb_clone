@@ -1,6 +1,6 @@
-# stayhub: an Airbnb-style marketplace
+# airbnb: a full-stack Airbnb clone
 
-A full-stack clone of Airbnb's core flows. Guests can browse and search homes, filter them, view a listing, pick dates and book a stay. Hosts can create, edit and delete listings and see their reservations. The UI follows Airbnb's own patterns: the explore grid with photo carousels, the category bar, the expanding search pill, the two-month date picker, the sticky reservation card, the photo tour and the guest-favorite badge.
+A full-stack clone of Airbnb's core flows. Guests can browse and search homes, filter them, view a listing, pick dates and book a stay. Hosts can create, edit and delete listings and see their reservations. The UI follows Airbnb's current design: the *All / Homes / Experiences / Services* tabs, the *Where / When / Who* search bar that condenses to a pill on scroll, "Popular homes in…" carousels with all-in prices, the two-month date picker, the sticky reservation card, the photo tour and the "Guest favourite" badge.
 
 | | |
 |---|---|
@@ -9,7 +9,7 @@ A full-stack clone of Airbnb's core flows. Guests can browse and search homes, f
 | **Database** | SQLite (schema below) |
 | **Live demo** | _add your Vercel URL here_ |
 
-> **Brand.** The app is called `stayhub` and uses an original logo, so it doesn't reproduce Airbnb's trademarks. Everything else (layout, flows, spacing, colour, interactions) follows Airbnb. To rename it, change `BRAND_NAME` in `frontend/src/lib/format.ts`.
+> **Brand.** The app uses the name "airbnb" (set once as `BRAND_NAME` in `frontend/src/lib/format.ts`) next to a placeholder mark rather than Airbnb's logo artwork. The footer labels it a demo project not affiliated with Airbnb, Inc., and the checkout's card fields are fixed test values, so a public deployment can't be mistaken for the real site or collect card details.
 
 ---
 
@@ -17,12 +17,12 @@ A full-stack clone of Airbnb's core flows. Guests can browse and search homes, f
 
 | Brief | What's implemented |
 |---|---|
-| **Home & search** | Responsive grid (1 to 6 columns, at Airbnb's breakpoints) with photo carousels, rating, location and price per night (or the total when dates are set). A search bar with *Where / Check in / Check out / Who* panels, which condenses to a pill on scroll and becomes a full-screen sheet on mobile. A category bar with 12 categories. A filters modal (price range slider, bedrooms, property type, amenities) that shows a live "Show N places" count. Infinite scroll with a "Show more" fallback. All search state is kept in the URL, so it can be shared and survives a refresh. |
+| **Home & search** | The home page is a set of destination carousels ("Popular homes in Goa", "Available in Kerala this weekend" …) with arrow paging; each card shows the **all-in price** for 2 nights (or the searched dates), computed by the API with the same formula as checkout, hence "Prices include all fees". Searching switches to a responsive results grid (1 to 6 columns, at Airbnb's breakpoints) with a 12-category bar and a map view. The *Where / When / Who* search bar condenses to a pill on scroll and becomes a full-screen sheet on mobile. A filters modal (price range slider, bedrooms, property type, amenities) that shows a live "Show N places" count. Infinite scroll with a "Show more" fallback. All search state is kept in the URL, so it can be shared and survives a refresh. |
 | **Listing detail** | Five-photo mosaic plus a photo tour and full-screen viewer. Title, description, highlights, amenities grouped by section, and host info with host-wide stats. An inline availability calendar with booked nights struck through. Price breakdown (nightly rate × nights, cleaning fee and service fee). Reviews with a rating distribution and a "Show all" modal. A location map. |
 | **Booking flow** | Date and guest validation on the client and again on the server: booked nights can't be picked, minimum stay and max guests are enforced, and past dates are rejected. *Confirm and pay* page with mocked payment. Confirmation page, **Trips** (upcoming, past and cancelled), cancellation. Bookings persist and block the dates. |
 | **Host CRUD** | An 8-step listing wizard (type, category, location on a map, basics, amenities, photos by URL **or upload**, title, price) that is reused for editing. Delete is blocked while the listing has upcoming stays. The dashboard shows earnings, rating and reservations by status (*checking out / currently hosting / arriving soon / upcoming / past*). |
 | **Airbnb experience** | Toasts with thumbnails and actions, wishlist hearts (optimistic, with rollback on error), modals and bottom sheets, a mobile tab bar, skeleton loaders and empty states. |
-| **Placeholders** | Messaging, Experiences, language/currency and the Help Center show "Coming soon". Payment is simulated. Login is mocked (see below). |
+| **Placeholders** | Messaging, the Experiences and Services tabs, and the Help Centre show "Coming soon". Payment is simulated. Login is mocked (see below). |
 | **Bonus** | Interactive map with price pins ✓ · reviews after a completed stay ✓ · Superhost badges and rating aggregation ✓ · image upload ✓ (local disk) · dark mode ✓ · responsive mobile, tablet and desktop ✓ |
 
 ### Demo accounts
@@ -31,12 +31,12 @@ There are no passwords. Click **Log in** and pick an account:
 
 | Account | Role | Good for trying |
 |---|---|---|
-| Priya Sharma | Superhost (6 listings) | Host dashboard, editing, reservations |
+| Priya Sharma | Superhost | Host dashboard, editing, reservations |
 | Daniel Brooks / Sofia Rossi | Superhosts | More host data |
 | Aarav Patel | Guest | Booking, Trips, a completed stay waiting for a review, a pre-filled wishlist |
 | Emma, Kabir, Lena | Guests | Booking |
 
-Any guest can click **Host your home → Start hosting** to become a host.
+Any guest can click **Become a host → Start hosting**. Hosts move between the two sides with **Switch to hosting** / **Switch to travelling** (top right, and in the menu).
 
 ---
 
@@ -52,7 +52,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-The first start creates `airbnb.db` and seeds it with 9 users, 38 listings across 15 countries, about 150 past stays with reviews, and upcoming bookings that block dates. To reset everything, run `python -m app.seed --reset`.
+The first start creates `airbnb.db` and seeds it with 9 users, 71 listings across 15 countries, about 280 past stays with reviews, and upcoming bookings that block dates. To reset everything, run `python -m app.seed --reset`.
 
 ```bash
 # 2. Web app → http://localhost:3000
