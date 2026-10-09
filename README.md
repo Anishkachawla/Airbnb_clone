@@ -1,4 +1,4 @@
-# airbnb: a full-stack Airbnb clone
+# Airbnb: a full-stack Airbnb clone
 
 A full-stack clone of Airbnb's core flows. Guests can browse and search homes, filter them, view a listing, pick dates and book a stay. Hosts can create, edit and delete listings and see their reservations. The UI follows Airbnb's current design: the *All / Homes / Experiences / Services* tabs, the *Where / When / Who* search bar that condenses to a pill on scroll, "Popular homes in…" carousels with all-in prices, the two-month date picker, the sticky reservation card, the photo tour and the "Guest favourite" badge.
 
@@ -7,9 +7,7 @@ A full-stack clone of Airbnb's core flows. Guests can browse and search homes, f
 | **Frontend** | Next.js 14 (App Router) · TypeScript · Tailwind CSS · Leaflet |
 | **Backend** | Python 3.12 · FastAPI · SQLAlchemy 2.0 · Pydantic v2 |
 | **Database** | SQLite (schema below) |
-| **Live demo** | _add your Vercel URL here_ |
-
-> **Brand.** The app uses the name "airbnb" (set once as `BRAND_NAME` in `frontend/src/lib/format.ts`) next to a placeholder mark rather than Airbnb's logo artwork. The footer labels it a demo project not affiliated with Airbnb, Inc., and the checkout's card fields are fixed test values, so a public deployment can't be mistaken for the real site or collect card details.
+| **Live demo** | https://airbnb-clone-five-liart-16.vercel.app/ |
 
 ---
 
@@ -256,17 +254,6 @@ Errors always come back as `{"detail": "..."}` with a message written for people
 
 ---
 
-## Deployment
-
-**API on Render.** Click *New → Blueprint* and select this repo (it uses `render.yaml`). Alternatively, create a *Web Service* with root `backend`, build command `pip install -r requirements.txt`, and start command `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Set these environment variables:
-- `CORS_ORIGINS`: your Vercel URL (`*.vercel.app` previews are already allowed)
-- `PUBLIC_API_URL`: the service's own URL (used to build URLs for uploaded photos)
-
-**Web app on Vercel.** Import the repo, set **Root Directory** to `frontend`, and add `NEXT_PUBLIC_API_URL=https://<your-api>.onrender.com`.
-
-> Free hosting tiers have an ephemeral disk, so the SQLite database and uploads reset when the service redeploys or restarts. Since the API reseeds itself on boot, the demo always comes back in a usable state. For durable data, attach a persistent disk and point `DATABASE_URL` and `UPLOAD_DIR` at it.
-
----
 
 ## Assumptions and trade-offs
 
