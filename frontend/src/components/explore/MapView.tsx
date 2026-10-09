@@ -8,8 +8,9 @@ import { StarSolid } from "@/components/ui/Icon";
 import { location, price, rating } from "@/lib/format";
 import type { ListingCard } from "@/lib/types";
 
-const TILES = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const TILES = process.env.NEXT_PUBLIC_MAP_TILES_URL ?? "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+const ATTRIBUTION =
+  process.env.NEXT_PUBLIC_MAP_ATTRIBUTION ?? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 /** Leaflet loaded on the client only (it touches `window` at import time). */
 export function useLeaflet() {
@@ -26,7 +27,7 @@ export function useLeaflet() {
 
 export function createMap(L: typeof Leaflet, el: HTMLElement, opts: Leaflet.MapOptions = {}) {
   const map = L.map(el, { zoomControl: false, attributionControl: true, ...opts });
-  L.tileLayer(TILES, { attribution: ATTRIBUTION, subdomains: "abcd", maxZoom: 19 }).addTo(map);
+  L.tileLayer(TILES, { attribution: ATTRIBUTION, maxZoom: 19 }).addTo(map);
   L.control.zoom({ position: "topright" }).addTo(map);
   return map;
 }
